@@ -1,8 +1,14 @@
-console.log( 'app.js has loaded and is running' );
+'use strict';
+
+console.log('app.js has loaded and is running');
 
 // JSX === JavaScript XML (Facebook)
 
-let template = <p>This is JSX from app.js</p>,
+var template = React.createElement(
+    'h1',
+    null,
+    'Indecision App'
+),
     appRoot = document.getElementById('app');
 
 ReactDOM.render(template, appRoot);
