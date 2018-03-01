@@ -4,13 +4,15 @@ console.log('app.js has loaded and is running');
 
 let app = {
     title: 'Indecision App',
-    subtitle: 'Put Your Life in the Hands of a Computer'
+    subtitle: 'Put Your Life in the Hands of a Computer',
+    options: ['ONE', 'TWO']
 };
 
 let template = (
     <div>
         <h1>{app.title}</h1>
-        <p>{app.subtitle}</p>
+        { app.subtitle && <p>{app.subtitle}</p>}
+        <p>{getOptions(app.options)}</p>
         <ol>
             <li>one</li>
             <li>two</li>
@@ -18,6 +20,13 @@ let template = (
         </ol>
     </div>
 );
+
+function getOptions(options){
+    if(options && options.length > 0){
+        return 'Here are your options'
+    }
+    return 'No Options'
+}
 
 
 let user = {
@@ -30,7 +39,7 @@ let user = {
 let userTmpl = (
     <div>
         <h1>{ user.name ? user.name : 'Anonymous'}</h1>
-        <p>Age: {user.age}</p>
+        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
         {getLocation(user.location)}
     </div>
 );
@@ -41,5 +50,5 @@ function getLocation(location) {
     }
 }
 
-ReactDOM.render(userTmpl, document.getElementById('app'));
-// ReactDOM.render( template, document.getElementById('app') );
+// ReactDOM.render(userTmpl, document.getElementById('app'));
+ReactDOM.render( template, document.getElementById('app') );
