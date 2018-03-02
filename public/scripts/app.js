@@ -1,67 +1,112 @@
 'use strict';
 
-console.info('loading up ES6 Arrow Functions 2');
+console.log('app.js has loaded and is running');
 
-var getFirstName = function getFirstName(fullName) {
-    return fullName.split(' ')[0];
+// JSX === JavaScript XML (Facebook)
+
+// SECTION 3, LESSON 15
+
+var app = {
+    title: 'Indecision App',
+    subtitle: 'Put Your Life in the Hands of a Computer',
+    options: ['ONE', 'TWO']
 };
 
-// console.log( getFirstName('Clinton Milner'));
+var template = React.createElement(
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        'p',
+        null,
+        app.subtitle
+    ),
+    React.createElement(
+        'p',
+        null,
+        getOptions(app.options)
+    ),
+    React.createElement(
+        'ol',
+        null,
+        React.createElement(
+            'li',
+            null,
+            'one'
+        ),
+        React.createElement(
+            'li',
+            null,
+            'two'
+        ),
+        React.createElement(
+            'li',
+            null,
+            'three'
+        )
+    )
+);
 
-
-/* ======== part 2 ========= */
-
-// arguments variable is not bound to arrow functions
-
-var add = function add(a, b) {
-    return a + b;
-};
-
-console.log(add(10, 30));
-
-// 'this' is no longer bound
-
-// const user = {
-//     'name' : 'Clint',
-//     'cities' : ['Lane End', 'Granby', 'Queenstown'],
-//     printPlacesLived: function() { // an arrow function here won't pass down 'this'
-//         this.cities.forEach( city => {
-//             console.info(`${this.name} has lived in ${city}`);
-//         });
-//     }
-// };
-
-
-var user = {
-    'name': 'Clint',
-    'cities': ['Lane End', 'Granby', 'Queenstown'],
-    printPlacesLived: function printPlacesLived() {
-        var _this = this;
-
-        // method declaration does past 'this'
-
-
-        return this.cities.map(function (city) {
-            return _this.name + ' has lived in ' + city;
-        });
+function getOptions(options) {
+    if (options && options.length > 0) {
+        return 'Here are your options';
     }
+    return 'No Options';
+}
+
+var count = 0;
+var addOne = function addOne() {
+    count++;
+    console.log('addOne was clicked', count);
+    renderCounterApp();
+};
+var minusOne = function minusOne() {
+    count--;
+    console.info('minusOne was clicked', count);
+    renderCounterApp();
+};
+var reset = function reset() {
+    count = 0;
+    console.warn('reset the count', count);
+    renderCounterApp();
 };
 
-console.log(user.printPlacesLived());
+var renderCounterApp = function renderCounterApp() {
+    var templateTwo = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h3',
+            null,
+            'Count: ',
+            count
+        ),
+        React.createElement(
+            'div',
+            { className: "btn-group btn-group-sm" },
+            React.createElement(
+                'button',
+                { onClick: minusOne, className: 'btn btn-secondary' },
+                '-1'
+            ),
+            React.createElement(
+                'button',
+                { onClick: reset, className: 'btn btn-dark' },
+                'Reset'
+            ),
+            React.createElement(
+                'button',
+                { onClick: addOne, className: 'btn btn-secondary' },
+                '+1'
+            )
+        )
+    );
 
-var multiplier = {
-    // numbers - array of numbers
-    'numbers': [3, 6, 1, 32, 67],
-    // multiplyBy = single number
-    'multiplyBy': 10,
-    // multiply - returns new array where the numbers have been multiplied
-    multiply: function multiply() {
-        var _this2 = this;
-
-        return this.numbers.map(function (num) {
-            return _this2.multiplyBy * num;
-        });
-    }
+    ReactDOM.render(templateTwo, document.getElementById('app'));
 };
 
-console.info(multiplier.multiply());
+renderCounterApp();

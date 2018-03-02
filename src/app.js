@@ -30,27 +30,37 @@ function getOptions(options){
     return 'No Options'
 }
 
-
-const user = {
-    name: 'Clint Milner',
-    age: 36,
-    location: 'Granby, CO'
+let count = 0;
+const addOne = () => {
+    count++;
+    console.log( 'addOne was clicked', count );
+    renderCounterApp()
+};
+const minusOne = () => {
+    count--;
+    console.info( 'minusOne was clicked', count );
+    renderCounterApp()
+};
+const reset = () => {
+    count = 0;
+    console.warn( 'reset the count', count );
+    renderCounterApp()
 };
 
 
-const userTmpl = (
-    <div>
-        <h1>{ user.name ? user.name : 'Anonymous'}</h1>
-        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
-        {getLocation(user.location)}
-    </div>
-);
+const renderCounterApp = () => {
+    const templateTwo = (
+        <div>
+            <h3>Count: {count}</h3>
+            <div className={"btn-group btn-group-sm"}>
+                <button onClick={minusOne} className={'btn btn-secondary'}>-1</button>
+                <button onClick={reset} className={'btn btn-dark'}>Reset</button>
+                <button onClick={addOne} className={'btn btn-secondary'}>+1</button>
+            </div>
+        </div>
+    );
 
-function getLocation(location) {
-    if(location) {
-        return <p>Location: { location }</p>;
-    }
-}
+    ReactDOM.render( templateTwo, document.getElementById('app') );
+};
 
-// ReactDOM.render(userTmpl, document.getElementById('app'));
-ReactDOM.render( template, document.getElementById('app') );
+renderCounterApp();
