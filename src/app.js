@@ -2,13 +2,15 @@ console.log('app.js has loaded and is running');
 
 // JSX === JavaScript XML (Facebook)
 
-let app = {
+// SECTION 3, LESSON 15
+
+const app = {
     title: 'Indecision App',
     subtitle: 'Put Your Life in the Hands of a Computer',
     options: ['ONE', 'TWO']
 };
 
-let template = (
+const template = (
     <div>
         <h1>{app.title}</h1>
         { app.subtitle && <p>{app.subtitle}</p>}
@@ -29,14 +31,14 @@ function getOptions(options){
 }
 
 
-let user = {
+const user = {
     name: 'Clint Milner',
     age: 36,
     location: 'Granby, CO'
 };
 
 
-let userTmpl = (
+const userTmpl = (
     <div>
         <h1>{ user.name ? user.name : 'Anonymous'}</h1>
         {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
