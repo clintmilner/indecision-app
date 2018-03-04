@@ -2,7 +2,7 @@ console.log('app.js has loaded and is running');
 
 // JSX === JavaScript XML (Facebook)
 
-// SECTION 3, LESSON 19
+// SECTION 3, LESSON 21
 
 const app = {
     title: 'Indecision App',
