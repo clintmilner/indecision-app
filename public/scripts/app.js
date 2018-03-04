@@ -1,40 +1,41 @@
 'use strict';
 
-console.log('build-it visibility example is running');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var app = {
-    'btnText': 'Show Details',
-    'isVisible': false
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var toggleVisibility = function toggleVisibility() {
-    app.isVisible = !app.isVisible;
+console.info('ES6 Classes');
 
-    render();
-};
+var Person = function () {
+    //define a constructor function (method definition)
+    // arguments can be set with method defaults
+    function Person() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Anonymous';
+        var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-var render = function render() {
-    var template = React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'h1',
-            null,
-            'Visibility Toggle'
-        ),
-        React.createElement(
-            'button',
-            { onClick: toggleVisibility, className: 'btn btn-sm btn-outline-primary' },
-            app.isVisible ? 'Hide' : 'Show',
-            ' Details'
-        ),
-        app.isVisible === true ? React.createElement(
-            'p',
-            null,
-            'Hey, you can see this now!'
-        ) : ''
-    );
-    ReactDOM.render(template, document.getElementById('app'));
-};
+        _classCallCheck(this, Person);
 
-render();
+        this.name = name;
+        this.age = age;
+    }
+
+    _createClass(Person, [{
+        key: 'getGreeting',
+        value: function getGreeting() {
+            return 'Hi ' + this.name + '!';
+        }
+    }, {
+        key: 'getDescription',
+        value: function getDescription() {
+            return this.name + ' is ' + this.age + ' year' + (this.age !== 1 ? 's' : '') + ' old!';
+        }
+    }]);
+
+    return Person;
+}();
+
+var me = new Person('Clint Milner', 36);
+var you = new Person();
+
+console.info(me.getDescription());
+console.info(you.getDescription());
