@@ -7,7 +7,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 console.info('ES6 Classes');
 
 var Person = function () {
-    //define a constructor function (method definition)
+    // define a constructor function (method definition)
     // arguments can be set with method defaults
     function Person() {
         var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Anonymous';
