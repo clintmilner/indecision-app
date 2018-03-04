@@ -2,63 +2,70 @@ console.log('app.js has loaded and is running');
 
 // JSX === JavaScript XML (Facebook)
 
-// SECTION 3, LESSON 21
+// React Components
 
-const app = {
-    title: 'Indecision App',
-    subtitle: 'Put Your Life in the Hands of a Computer',
-    options: []
-};
+class IndecisionApp extends React.Component {
 
-const onFormSubmit = (e) => {
-    e.preventDefault();
-    const option = e.target.elements['option'].value;
-
-    if(option) {
-        app.options.push(option);
-        e.target.elements['option'].value = '';
-        render();
+    render(){
+        return (
+            <div>
+                <Header />
+                <Action />
+                <Options />
+                <AddOption />
+            </div>
+        );
     }
-};
-
-const removeAll = () => {
-    app.options = [];
-    render();
-};
-
-function getOptions(options) {
-    if(options && options.length > 0) {
-        return 'Here are your options'
-    }
-    return 'No Options'
 }
 
-const onMakeDecision = () =>  {
-    const randNum = Math.floor( Math.random() * app.options.length );
-    const option = app.options[ randNum ];
 
 
-    console.info( randNum, option );
-};
+class Header extends React.Component {
+    // when you extend React.Component, you must have a render function
+    render(){
+        return (
+            <div>
+                <h1>Indecision App</h1>
+                <h2>Put your life in the hands of a computer</h2>
+            </div>
+        )
+    }
+}
 
-const render = () => {
-    const template = (
-        <div>
-            <h1>{app.title}</h1>
-            {app.subtitle && <p>{app.subtitle}</p>}
-            <p>{getOptions(app.options)}</p>
-            <button disabled={app.options.length <= 0} onClick={onMakeDecision}>What Should I Do?</button>
-            <button onClick={removeAll}>Remove All</button>
+class Action extends React.Component {
+    render() {
+        return <button className={'btn btn-sm btn-outline-secondary'}>What Should I Do?</button>;
+    }
+}
+
+// Options console.log some stuff
+class Options extends React.Component {
+
+    render(){
+        return (
             <ol>
-                { app.options.map( (option) => <li key={option}>{option}</li> ) }
+                <Option />
             </ol>
-            <form onSubmit={onFormSubmit}>
-                <input type="text" name="option"/>
-                <button className={'btn btn-sm btn-success'}>Add Option</button>
-            </form>
-        </div>
-    );
-    ReactDOM.render(template, document.getElementById('app'));
-};
+        )
+    }
+}
 
-render();
+class Option extends React.Component {
+    render(){
+        return (
+            <li>Here is an Option</li>
+        )
+    }
+}
+
+
+// AddOption Component
+class AddOption extends React.Component {
+    render(){
+        return <button className={'btn btn-sm btn-outline-primary'}>Add Option</button>
+    }
+}
+
+
+
+ReactDOM.render( <IndecisionApp />, document.getElementById('app') );
