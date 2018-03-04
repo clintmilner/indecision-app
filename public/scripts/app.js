@@ -4,52 +4,29 @@ console.log('app.js has loaded and is running');
 
 // JSX === JavaScript XML (Facebook)
 
-// SECTION 3, LESSON 15
+// SECTION 3, LESSON 19
 
 var app = {
     title: 'Indecision App',
     subtitle: 'Put Your Life in the Hands of a Computer',
-    options: ['ONE', 'TWO']
+    options: []
 };
 
-var template = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        app.title
-    ),
-    app.subtitle && React.createElement(
-        'p',
-        null,
-        app.subtitle
-    ),
-    React.createElement(
-        'p',
-        null,
-        getOptions(app.options)
-    ),
-    React.createElement(
-        'ol',
-        null,
-        React.createElement(
-            'li',
-            null,
-            'one'
-        ),
-        React.createElement(
-            'li',
-            null,
-            'two'
-        ),
-        React.createElement(
-            'li',
-            null,
-            'three'
-        )
-    )
-);
+var onFormSubmit = function onFormSubmit(e) {
+    e.preventDefault();
+    var option = e.target.elements['option'].value;
+
+    if (option) {
+        app.options.push(option);
+        e.target.elements['option'].value = '';
+        render();
+    }
+};
+
+var removeAll = function removeAll() {
+    app.options = [];
+    render();
+};
 
 function getOptions(options) {
     if (options && options.length > 0) {
@@ -58,55 +35,65 @@ function getOptions(options) {
     return 'No Options';
 }
 
-var count = 0;
-var addOne = function addOne() {
-    count++;
-    console.log('addOne was clicked', count);
-    renderCounterApp();
-};
-var minusOne = function minusOne() {
-    count--;
-    console.info('minusOne was clicked', count);
-    renderCounterApp();
-};
-var reset = function reset() {
-    count = 0;
-    console.warn('reset the count', count);
-    renderCounterApp();
+var onMakeDecision = function onMakeDecision() {
+    var randNum = Math.floor(Math.random() * app.options.length);
+    var option = app.options[randNum];
+
+    console.info(randNum, option);
 };
 
-var renderCounterApp = function renderCounterApp() {
-    var templateTwo = React.createElement(
+var render = function render() {
+    var template = React.createElement(
         'div',
         null,
         React.createElement(
-            'h3',
+            'h1',
             null,
-            'Count: ',
-            count
+            app.title
+        ),
+        app.subtitle && React.createElement(
+            'p',
+            null,
+            app.subtitle
         ),
         React.createElement(
-            'div',
-            { className: "btn-group btn-group-sm" },
+            'p',
+            null,
+            getOptions(app.options)
+        ),
+        React.createElement(
+            'button',
+            { disabled: app.options.length <= 0, onClick: onMakeDecision },
+            'What Should I Do?'
+        ),
+        React.createElement(
+            'button',
+            { onClick: removeAll },
+            'Remove All'
+        ),
+        React.createElement(
+            'ol',
+            null,
+            app.options.map(function (option) {
+                return React.createElement(
+                    'li',
+                    { key: option },
+                    option
+                );
+            })
+        ),
+        React.createElement(
+            'form',
+            { onSubmit: onFormSubmit },
+            React.createElement('input', { type: 'text', name: 'option' }),
             React.createElement(
                 'button',
-                { onClick: minusOne, className: 'btn btn-secondary' },
-                '-1'
-            ),
-            React.createElement(
-                'button',
-                { onClick: reset, className: 'btn btn-dark' },
-                'Reset'
-            ),
-            React.createElement(
-                'button',
-                { onClick: addOne, className: 'btn btn-secondary' },
-                '+1'
+                { className: 'btn btn-sm btn-success' },
+                'Add Option'
             )
         )
     );
-
-    ReactDOM.render(templateTwo, document.getElementById('app'));
+    ReactDOM.render(template, document.getElementById('app'));
 };
 
-renderCounterApp();
+render();

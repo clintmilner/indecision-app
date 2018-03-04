@@ -2,65 +2,63 @@ console.log('app.js has loaded and is running');
 
 // JSX === JavaScript XML (Facebook)
 
-// SECTION 3, LESSON 15
+// SECTION 3, LESSON 19
 
 const app = {
     title: 'Indecision App',
     subtitle: 'Put Your Life in the Hands of a Computer',
-    options: ['ONE', 'TWO']
+    options: []
 };
 
-const template = (
-    <div>
-        <h1>{app.title}</h1>
-        { app.subtitle && <p>{app.subtitle}</p>}
-        <p>{getOptions(app.options)}</p>
-        <ol>
-            <li>one</li>
-            <li>two</li>
-            <li>three</li>
-        </ol>
-    </div>
-);
+const onFormSubmit = (e) => {
+    e.preventDefault();
+    const option = e.target.elements['option'].value;
 
-function getOptions(options){
-    if(options && options.length > 0){
+    if(option) {
+        app.options.push(option);
+        e.target.elements['option'].value = '';
+        render();
+    }
+};
+
+const removeAll = () => {
+    app.options = [];
+    render();
+};
+
+function getOptions(options) {
+    if(options && options.length > 0) {
         return 'Here are your options'
     }
     return 'No Options'
 }
 
-let count = 0;
-const addOne = () => {
-    count++;
-    console.log( 'addOne was clicked', count );
-    renderCounterApp()
-};
-const minusOne = () => {
-    count--;
-    console.info( 'minusOne was clicked', count );
-    renderCounterApp()
-};
-const reset = () => {
-    count = 0;
-    console.warn( 'reset the count', count );
-    renderCounterApp()
-};
+const onMakeDecision = () =>  {
+    const randNum = Math.floor( Math.random() * app.options.length );
+    const option = app.options[ randNum ];
 
 
-const renderCounterApp = () => {
-    const templateTwo = (
+    console.info( randNum, option );
+};
+
+const render = () => {
+    const template = (
         <div>
-            <h3>Count: {count}</h3>
-            <div className={"btn-group btn-group-sm"}>
-                <button onClick={minusOne} className={'btn btn-secondary'}>-1</button>
-                <button onClick={reset} className={'btn btn-dark'}>Reset</button>
-                <button onClick={addOne} className={'btn btn-secondary'}>+1</button>
-            </div>
+            <h1>{app.title}</h1>
+            {app.subtitle && <p>{app.subtitle}</p>}
+            <p>{getOptions(app.options)}</p>
+            <button disabled={app.options.length <= 0} onClick={onMakeDecision}>What Should I Do?</button>
+            <button onClick={removeAll}>Remove All</button>
+            <ol>
+                { app.options.map( (option) => <li key={option}>{option}</li> ) }
+            </ol>
+            <form onSubmit={onFormSubmit}>
+                <input type="text" name="option"/>
+                <button className={'btn btn-sm btn-success'}>Add Option</button>
+            </form>
         </div>
     );
-
-    ReactDOM.render( templateTwo, document.getElementById('app') );
+    ReactDOM.render(template, document.getElementById('app'));
 };
 
-renderCounterApp();
+render();
