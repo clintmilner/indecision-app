@@ -42,7 +42,7 @@ class Counter extends React.Component {
         return (
             <div>
                 <h1>Count: {this.state.count}</h1>
-                <div className={'btn-group btn-group-justified'}>
+                <div className={'btn-group'}>
                     <button className={'btn btn-dark'} onClick={this.handleMinusOne}>-1</button>
                     <button className={'btn'} onClick={this.handleReset}>Reset</button>
                     <button className={'btn btn-dark'} onClick={this.handlePlusOne}>+1</button>
