@@ -12,7 +12,7 @@ console.log('app.js has loaded and is running');
 
 // JSX === JavaScript XML (Facebook)
 
-// React Components
+// React Components 4:30
 
 var IndecisionApp = function (_React$Component) {
     _inherits(IndecisionApp, _React$Component);
@@ -88,11 +88,16 @@ var Action = function (_React$Component3) {
     }
 
     _createClass(Action, [{
+        key: 'handlePick',
+        value: function handlePick() {
+            console.log('What Should I Do? btn clicked');
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
                 'button',
-                { className: 'btn btn-sm btn-outline-secondary' },
+                { onClick: this.handlePick, className: 'btn btn-sm btn-outline-secondary' },
                 'What Should I Do?'
             );
         }
@@ -100,9 +105,6 @@ var Action = function (_React$Component3) {
 
     return Action;
 }(React.Component);
-
-// Options console.log some stuff
-
 
 var Options = function (_React$Component4) {
     _inherits(Options, _React$Component4);
@@ -114,16 +116,20 @@ var Options = function (_React$Component4) {
     }
 
     _createClass(Options, [{
+        key: 'handleRemoveAll',
+        value: function handleRemoveAll() {
+            console.log('time to remove all the things');
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
                 'div',
                 null,
                 React.createElement(
-                    'p',
-                    null,
-                    'Length: ',
-                    this.props.options.length
+                    'button',
+                    { onClick: this.handleRemoveAll, className: 'btn btn-sm btn-outline-secondary' },
+                    'Remove All'
                 ),
                 React.createElement(
                     'ol',
@@ -175,12 +181,27 @@ var AddOption = function (_React$Component6) {
     }
 
     _createClass(AddOption, [{
+        key: 'handleAddOption',
+        value: function handleAddOption(e) {
+            e.preventDefault();
+            var option = e.target.elements['option'].value.trim();
+
+            if (option) {
+                e.target.elements['option'].value = '';
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
-                'button',
-                { className: 'btn btn-sm btn-outline-primary' },
-                'Add Option'
+                'form',
+                { onSubmit: this.handleAddOption },
+                React.createElement('input', { type: 'text', name: 'option', placeholder: 'Add an Option Here' }),
+                React.createElement(
+                    'button',
+                    { type: 'submit', className: 'btn btn-sm btn-outline-primary' },
+                    'Add Option'
+                )
             );
         }
     }]);

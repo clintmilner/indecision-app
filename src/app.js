@@ -2,7 +2,7 @@ console.log('app.js has loaded and is running');
 
 // JSX === JavaScript XML (Facebook)
 
-// React Components
+// React Components 4:30
 
 class IndecisionApp extends React.Component {
 
@@ -38,18 +38,23 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
+    handlePick() {
+        console.log('What Should I Do? btn clicked');
+    }
     render() {
-        return <button className={'btn btn-sm btn-outline-secondary'}>What Should I Do?</button>;
+        return <button onClick={this.handlePick} className={'btn btn-sm btn-outline-secondary'}>What Should I Do?</button>;
     }
 }
 
-// Options console.log some stuff
 class Options extends React.Component {
+    handleRemoveAll() {
+        console.log( 'time to remove all the things' );
+    }
 
     render(){
         return (
             <div>
-                <p>Length: {this.props.options.length}</p>
+                <button onClick={this.handleRemoveAll} className={'btn btn-sm btn-outline-secondary'}>Remove All</button>
                 <ol>
                     {this.props.options.map( (option) => <Option key={option} optionText={option} />)}
                 </ol>
@@ -67,11 +72,23 @@ class Option extends React.Component {
     }
 }
 
-
 // AddOption Component
 class AddOption extends React.Component {
+    handleAddOption(e) {
+        e.preventDefault();
+        let option = e.target.elements['option'].value.trim();
+
+        if(option){
+            e.target.elements['option'].value = '';
+        }
+    }
     render(){
-        return <button className={'btn btn-sm btn-outline-primary'}>Add Option</button>
+        return (
+            <form onSubmit={this.handleAddOption}>
+                <input type="text" name='option' placeholder="Add an Option Here" />
+                <button type="submit" className={'btn btn-sm btn-outline-primary'}>Add Option</button>
+            </form>
+        )
     }
 }
 
