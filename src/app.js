@@ -7,11 +7,16 @@ console.log('app.js has loaded and is running');
 class IndecisionApp extends React.Component {
 
     render(){
+        const title = 'Indecision App',
+              subtitle = 'Put your life in the hands of a computer',
+              options = ['thing 1', 'thing 2', 'thing 4'];
+
+
         return (
             <div>
-                <Header />
+                <Header title={title} subtitle={subtitle} />
                 <Action />
-                <Options />
+                <Options options={options} />
                 <AddOption />
             </div>
         );
@@ -25,8 +30,8 @@ class Header extends React.Component {
     render(){
         return (
             <div>
-                <h1>Indecision App</h1>
-                <h2>Put your life in the hands of a computer</h2>
+                <h1>{this.props.title}</h1>
+                <h4>{this.props.subtitle}</h4>
             </div>
         )
     }
@@ -43,9 +48,13 @@ class Options extends React.Component {
 
     render(){
         return (
-            <ol>
-                <Option />
-            </ol>
+            <div>
+                <p>Length: {this.props.options.length}</p>
+                <ol>
+                    {this.props.options.map( (option) => <Option key={option} optionText={option} />)}
+                </ol>
+            </div>
+
         )
     }
 }
@@ -53,7 +62,7 @@ class Options extends React.Component {
 class Option extends React.Component {
     render(){
         return (
-            <li>Here is an Option</li>
+            <li key={this.props.key}>{this.props.optionText}</li>
         )
     }
 }
