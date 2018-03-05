@@ -11,7 +11,6 @@ class IndecisionApp extends React.Component {
               subtitle = 'Put your life in the hands of a computer',
               options = ['thing 1', 'thing 2', 'thing 4'];
 
-
         return (
             <div>
                 <Header title={title} subtitle={subtitle} />
@@ -47,8 +46,13 @@ class Action extends React.Component {
 }
 
 class Options extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.handleRemoveAll = this.handleRemoveAll.bind(this); // creates a class-based binding to this
+    }
     handleRemoveAll() {
-        console.log( 'time to remove all the things' );
+        console.log( this.props.options, 'time to remove all the things' );
     }
 
     render(){
