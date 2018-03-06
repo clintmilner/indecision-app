@@ -68,56 +68,97 @@ class IndecisionApp extends React.Component {
     }
 }
 
+const Header = (props) => {
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            <h4>{props.subtitle}</h4>
+        </div>
+    );
+};
 
-class Header extends React.Component {
-    // when you extend React.Component, you must have a render function
-    render() {
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <h4>{this.props.subtitle}</h4>
-            </div>
-        )
-    }
-}
 
-class Action extends React.Component {
+// class Header extends React.Component {
+//     when you extend React.Component, you must have a render function
+    // render() {
+    //     return (
+    //         <div>
+    //             <h1>{this.props.title}</h1>
+    //             <h4>{this.props.subtitle}</h4>
+    //         </div>
+    //     )
+    // }
+// }
 
-    render() {
-        return (
-            <button onClick={this.props.handlePick}
-                    disabled={!this.props.hasOptions}
-                    className={'btn btn-sm btn-outline-secondary'}>
-                What Should I Do?
+const Action = (props) => {
+    return (
+        <button onClick={props.handlePick}
+                disabled={!props.hasOptions}
+                className={'btn btn-sm btn-outline-secondary'}>
+            What Should I Do?
+        </button>
+    );
+};
+
+// class Action extends React.Component {
+//
+//     render() {
+//         return (
+//             <button onClick={this.props.handlePick}
+//                     disabled={!this.props.hasOptions}
+//                     className={'btn btn-sm btn-outline-secondary'}>
+//                 What Should I Do?
+//             </button>
+//         );
+//     }
+// }
+
+const Options = (props) => {
+    return (
+        <div>
+            <button onClick={props.handleDeleteOptions} className={'btn btn-sm btn-outline-secondary'}>Remove
+                All
             </button>
-        );
-    }
-}
-
-class Options extends React.Component {
-
-    render() {
-        return (
             <div>
-                <button onClick={this.props.handleDeleteOptions} className={'btn btn-sm btn-outline-secondary'}>Remove
-                    All
-                </button>
-                <ol>
-                    {this.props.options.map((option) => <Option key={option} optionText={option}/>)}
-                </ol>
+                {props.options.map((option) => <Option key={option} optionText={option}/>)}
             </div>
+        </div>
 
-        )
-    }
-}
+    );
+};
 
-class Option extends React.Component {
-    render() {
-        return (
-            <li key={this.props.key}>{this.props.optionText}</li>
-        )
-    }
-}
+// class Options extends React.Component {
+//
+//     render() {
+//         return (
+            {/*<div>*/}
+                {/*<button onClick={this.props.handleDeleteOptions} className={'btn btn-sm btn-outline-secondary'}>Remove*/}
+                    // All
+                // </button>
+                {/*<ol>*/}
+                    // {this.props.options.map((option) => <Option key={option} optionText={option}/>)}
+                // </ol>
+            // </div>
+        //
+        // )
+    // }
+// }
+
+
+const Option = (props) => {
+    return (
+        <p>{props.optionText}</p>
+    );
+};
+
+
+// class Option extends React.Component {
+//     render() {
+//         return (
+            {/*<li key={this.props.key}>{this.props.optionText}</li>*/}
+        // )
+    // }
+// }
 
 // AddOption Component
 class AddOption extends React.Component {
@@ -158,4 +199,17 @@ class AddOption extends React.Component {
 }
 
 
-ReactDOM.render(<IndecisionApp/>, document.getElementById('app'));
+
+
+// stateless functional components
+// good for functions that don't need state
+// const User = (props) => {
+//     return (
+//         <div>
+//             <p>Name: {props.name}</p>
+//             <p>Age: {props.age}</p>
+//         </div>
+//     );
+// };
+
+ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
