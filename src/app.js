@@ -14,9 +14,9 @@ class IndecisionApp extends React.Component {
         this.handlePick = this.handlePick.bind(this);
         this.handleDeleteOption = this.handleDeleteOption.bind(this);
 
-        this.state = {
-            options: props.options
-        };
+        // this.state = {
+        //     options: props.options
+        // };
     }
 
     // lifecycle methods - class components only!
@@ -42,9 +42,6 @@ class IndecisionApp extends React.Component {
         if(prevState.options.length !== this.state.options.length) {
             localStorage.setItem('options', JSON.stringify(this.state.options));
         }
-
-
-        // saving data
     }
 
     componentWillUnmount() {
@@ -102,9 +99,9 @@ class IndecisionApp extends React.Component {
 }
 
 
-IndecisionApp.defaultProps = {
-    options: []
-};
+// IndecisionApp.defaultProps = {
+//     options: []
+// };
 
 const Header = (props) => {
     return (

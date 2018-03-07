@@ -12,9 +12,37 @@ class Counter extends React.Component {
 
         // set up default state inside the Component Constructor
         // default state can be passed in on initialization using props
+
+        // commented out now because we're getting the initial state from
+        // localStorage and updating the state in the lifecycle methods below
         this.state = {
             count: props.count
         };
+    }
+
+    componentDidMount(){
+        // go get stuff that was stored
+
+        try {
+            const stringCount = localStorage.getItem('count');
+            const count = parseInt( stringCount, 10 );
+
+            if( !isNaN(count) ) {
+                this.setState( () => ({count}));
+            }
+        } catch( err ) {
+            console.error( 'invalid JSON in localStorage', err);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        console.log('componentDidUpdate - state or prop updates', prevProps, prevState);
+
+
+        if((prevState.count !== this.state.count) || (prevState.count !== 0 && this.state.count === 0)){
+            console.log(prevState.count , this.state.count);
+            localStorage.setItem( 'count', this.state.count);
+        }
     }
 
     handleMinusOne() {
@@ -57,4 +85,4 @@ Counter.defaultProps = {
     count : 0
 };
 
-ReactDOM.render( <Counter count={311} />, document.getElementById('app') );
+ReactDOM.render( <Counter />, document.getElementById('app') );
