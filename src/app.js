@@ -110,19 +110,6 @@ const Action = (props) => {
     );
 };
 
-// class Action extends React.Component {
-//
-//     render() {
-//         return (
-//             <button onClick={this.props.handlePick}
-//                     disabled={!this.props.hasOptions}
-//                     className={'btn btn-sm btn-outline-secondary'}>
-//                 What Should I Do?
-//             </button>
-//         );
-//     }
-// }
-
 const Options = (props) => {
     return (
         <div>
@@ -141,24 +128,6 @@ const Options = (props) => {
     );
 };
 
-// class Options extends React.Component {
-//
-//     render() {
-//         return (
-            {/*<div>*/}
-                {/*<button onClick={this.props.handleDeleteOptions} className={'btn btn-sm btn-outline-secondary'}>Remove*/}
-                    // All
-                // </button>
-                {/*<ol>*/}
-                    // {this.props.options.map((option) => <Option key={option} optionText={option}/>)}
-                // </ol>
-            // </div>
-        //
-        // )
-    // }
-// }
-
-
 const Option = (props) => {
     return (
         <div>
@@ -170,14 +139,6 @@ const Option = (props) => {
     );
 };
 
-
-// class Option extends React.Component {
-//     render() {
-//         return (
-            {/*<li key={this.props.key}>{this.props.optionText}</li>*/}
-        // )
-    // }
-// }
 
 // AddOption Component
 class AddOption extends React.Component {
@@ -214,19 +175,5 @@ class AddOption extends React.Component {
         )
     }
 }
-
-
-
-
-// stateless functional components
-// good for functions that don't need state
-// const User = (props) => {
-//     return (
-//         <div>
-//             <p>Name: {props.name}</p>
-//             <p>Age: {props.age}</p>
-//         </div>
-//     );
-// };
 
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
