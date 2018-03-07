@@ -33,7 +33,45 @@ var IndecisionApp = function (_React$Component) {
         return _this;
     }
 
+    // lifecycle methods - class components only!
+    //https://reactjs.org/docs/glossary.html#lifecycle-methods
+
+
     _createClass(IndecisionApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            try {
+                console.log('componentDidMount - DOM Ready - after render()');
+                // fetching data previously saved
+                var json = localStorage.getItem('options'),
+                    options = JSON.parse(json);
+
+                if (options) {
+                    this.setState(function () {
+                        return { options: options };
+                    });
+                }
+            } catch (err) {
+                console.error('localStorage data is invalid', err);
+            }
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            console.log('componentDidUpdate - state or prop updates', prevProps, prevState);
+
+            if (prevState.options.length !== this.state.options.length) {
+                localStorage.setItem('options', JSON.stringify(this.state.options));
+            }
+
+            // saving data
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            console.log('componentWillUnmount - GC for single-page apps when pages update');
+        }
+    }, {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
             this.setState(function () {
@@ -66,7 +104,6 @@ var IndecisionApp = function (_React$Component) {
     }, {
         key: 'handleDeleteOption',
         value: function handleDeleteOption(optionToRemove) {
-            console.log('hdo', optionToRemove);
             this.setState(function (prevState) {
                 return {
                     options: prevState.options.filter(function (option) {
@@ -123,18 +160,6 @@ Header.defaultProps = {
     title: 'Indecision App'
 };
 
-// class Header extends React.Component {
-//     when you extend React.Component, you must have a render function
-// render() {
-//     return (
-//         <div>
-//             <h1>{this.props.title}</h1>
-//             <h4>{this.props.subtitle}</h4>
-//         </div>
-//     )
-// }
-// }
-
 var Action = function Action(props) {
     return React.createElement(
         'button',
@@ -145,19 +170,6 @@ var Action = function Action(props) {
     );
 };
 
-// class Action extends React.Component {
-//
-//     render() {
-//         return (
-//             <button onClick={this.props.handlePick}
-//                     disabled={!this.props.hasOptions}
-//                     className={'btn btn-sm btn-outline-secondary'}>
-//                 What Should I Do?
-//             </button>
-//         );
-//     }
-// }
-
 var Options = function Options(props) {
     return React.createElement(
         'div',
@@ -166,6 +178,11 @@ var Options = function Options(props) {
             'button',
             { onClick: props.handleDeleteOptions, className: 'btn btn-sm btn-outline-secondary' },
             'Remove All'
+        ),
+        props.options.length === 0 && React.createElement(
+            'p',
+            null,
+            'Please add an option to get started.'
         ),
         React.createElement(
             'div',
@@ -178,24 +195,6 @@ var Options = function Options(props) {
         )
     );
 };
-
-// class Options extends React.Component {
-//
-//     render() {
-//         return (
-{/*<div>*/}
-{} /*<button onClick={this.props.handleDeleteOptions} className={'btn btn-sm btn-outline-secondary'}>Remove*/
-// All
-// </button>
-{} /*<ol>*/
-// {this.props.options.map((option) => <Option key={option} optionText={option}/>)}
-// </ol>
-// </div>
-//
-// )
-// }
-// }
-
 
 var Option = function Option(props) {
     return React.createElement(
@@ -215,14 +214,6 @@ var Option = function Option(props) {
         )
     );
 };
-
-// class Option extends React.Component {
-//     render() {
-//         return (
-{} /*<li key={this.props.key}>{this.props.optionText}</li>*/
-// )
-// }
-// }
 
 // AddOption Component
 
@@ -253,7 +244,9 @@ var AddOption = function (_React$Component2) {
                 return { error: error };
             });
 
-            e.target.elements['option'].value = '';
+            if (!error) {
+                e.target.elements['option'].value = '';
+            }
         }
     }, {
         key: 'render',
@@ -282,16 +275,5 @@ var AddOption = function (_React$Component2) {
 
     return AddOption;
 }(React.Component);
-
-// stateless functional components
-// good for functions that don't need state
-// const User = (props) => {
-//     return (
-//         <div>
-//             <p>Name: {props.name}</p>
-//             <p>Age: {props.age}</p>
-//         </div>
-//     );
-// };
 
 ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
