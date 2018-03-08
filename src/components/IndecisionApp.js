@@ -9,18 +9,9 @@ import Action from './Action';
 
 export default class IndecisionApp extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handleAddOptions = this.handleAddOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-
-        this.state = {
-            options: []
-        };
-    }
+    state = {
+        options: []
+    };
 
     // lifecycle methods - class components only!
     //https://reactjs.org/docs/glossary.html#lifecycle-methods
@@ -51,11 +42,11 @@ export default class IndecisionApp extends React.Component {
         console.log('componentWillUnmount - GC for single-page apps when pages update');
     }
 
-    handleDeleteOptions() {
+    handleDeleteOptions = () => {
         this.setState(() => ({options: []}));
-    }
+    };
 
-    handleAddOptions(option) {
+    handleAddOptions = (option) => {
 
         if(!option) {
             return 'Enter valid value to add item';
@@ -64,22 +55,22 @@ export default class IndecisionApp extends React.Component {
         }
 
         this.setState((prevState) => ({options: prevState.options.concat(option)}));
-    }
+    };
 
-    handlePick() {
+    handlePick = () => {
         // randomly pick an option
         const randNum = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[randNum];
 
         console.info(option);
 
-    }
+    };
 
-    handleDeleteOption(optionToRemove) {
+    handleDeleteOption = (optionToRemove) => {
         this.setState((prevState) => ({
             options: prevState.options.filter((option => optionToRemove !== option))
         }));
-    }
+    };
 
     render() {
         const subtitle = 'Put your life in the hands of a computer';
