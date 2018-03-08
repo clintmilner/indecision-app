@@ -7,7 +7,7 @@ const OptionModal = (props) => (
            contentLabel='Selected Option'>
         <h3>Selected Option</h3>
         {props.selectedOption && <p>{props.selectedOption}</p>}
-        <button className={'btn btn-sm btn-block'} onClick={props.handleCloseModal}>Thanks!</button>
+        <button onClick={props.handleCloseModal}>Thanks!</button>
     </Modal>
 );
 
