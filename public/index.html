@@ -8,12 +8,10 @@
 <body>
 <div id="app" class="container-fluid">
     This is my HTML and live server is running with:
-    <pre>$ live-server public</pre>
-    <pre>$ babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch</pre>
+    <pre>$ yarn serve</pre>
+    <pre>$ yarn build</pre>
 </div>
 
-<script src="//unpkg.com/react@16.0.0/umd/react.development.js"></script>
-<script src="//unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
-<script src="/scripts/app.js"></script>
+<script src="bundle.js"></script>
 </body>
 </html>

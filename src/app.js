@@ -1,201 +1,27 @@
-console.log('app.js has loaded and is running');
-
-// JSX === JavaScript XML (Facebook)
-
-// React Components 4:30
-
-class IndecisionApp extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handleAddOptions = this.handleAddOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-
-        // this.state = {
-        //     options: props.options
-        // };
-    }
-
-    // lifecycle methods - class components only!
-    //https://reactjs.org/docs/glossary.html#lifecycle-methods
-    componentDidMount() {
-        try {
-            console.log('componentDidMount - DOM Ready - after render()');
-            // fetching data previously saved
-            const json = localStorage.getItem('options'),
-                options = JSON.parse(json);
-
-            if(options) {
-                this.setState(() => ({options}));
-            }
-        } catch(err) {
-            console.error('localStorage data is invalid', err);
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate - state or prop updates', prevProps, prevState);
-
-        if(prevState.options.length !== this.state.options.length) {
-            localStorage.setItem('options', JSON.stringify(this.state.options));
-        }
-    }
-
-    componentWillUnmount() {
-        console.log('componentWillUnmount - GC for single-page apps when pages update');
-    }
+// install/import/use for 3rd party libs
+import React from 'react';
+import ReactDOM from 'react-dom';
+import validator from 'validator';
+import myMath from './utils.js';
+import isSenior, { isAdult, canDrink } from "./person";
 
 
-    handleDeleteOptions() {
-        this.setState(() => ({options: []}));
-    }
+console.log( 'app.js is running using webapp!' );
 
-    handleAddOptions(option) {
+console.info( myMath.square(3) );
+console.info( myMath.add(3,4) );
+console.info( myMath.subtract(3,4) );
 
-        if(!option) {
-            return 'Enter valid value to add item';
-        } else if(this.state.options.includes(option)) {
-            return 'This option is already on your list';
-        }
+const age = 36,
+    email = 'clinton.milner@gmail.com';
 
-        this.setState((prevState) => ({options: prevState.options.concat(option)}));
-    }
-
-    handlePick() {
-        // randomly pick an option
-        const randNum = Math.floor(Math.random() * this.state.options.length);
-        const option = this.state.options[randNum];
-
-        console.info(option);
-
-    }
-
-    handleDeleteOption(optionToRemove) {
-        this.setState((prevState) => ({
-            options: prevState.options.filter((option => optionToRemove !== option))
-        }));
-    }
+console.warn( isAdult(age) );
+console.warn( canDrink(age) );
+console.warn( isSenior(age) );
 
 
-    render() {
-        const subtitle = 'Put your life in the hands of a computer';
+console.log( email, validator.isEmail(email) );
 
-        return (
-            <div>
-                <Header subtitle={subtitle}/>
-                <Action hasOptions={this.state.options.length > 0}
-                        handlePick={this.handlePick}/>
-                <Options
-                    handleDeleteOption={this.handleDeleteOption}
-                    options={this.state.options}
-                    handleDeleteOptions={this.handleDeleteOptions}/>
-                <AddOption handleAddOption={this.handleAddOptions}/>
-            </div>
-        );
-    }
-}
+const tmpl = <p>JSX into Babel to bundle.js!</p>;
+ReactDOM.render( tmpl, document.getElementById('app'));
 
-
-// IndecisionApp.defaultProps = {
-//     options: []
-// };
-
-const Header = (props) => {
-    return (
-        <div>
-            <h1>{props.title}</h1>
-            {props.subtitle && <h4>{props.subtitle}</h4>}
-        </div>
-    );
-};
-
-Header.defaultProps = {
-    title: 'Indecision App'
-};
-
-const Action = (props) => {
-    return (
-        <button onClick={props.handlePick}
-                disabled={!props.hasOptions}
-                className={'btn btn-sm btn-outline-secondary'}>
-            What Should I Do?
-        </button>
-    );
-};
-
-const Options = (props) => {
-    return (
-        <div>
-            <button onClick={props.handleDeleteOptions} className={'btn btn-sm btn-outline-secondary'}>Remove
-                All
-            </button>
-            {props.options.length === 0 && <p>Please add an option to get started.</p>}
-            <div>
-                {props.options.map((option) => (
-                    <Option key={option}
-                            optionText={option}
-                            handleDeleteOption={props.handleDeleteOption}/>
-                ))}
-            </div>
-        </div>
-
-    );
-};
-
-const Option = (props) => {
-    return (
-        <div>
-            <p>{props.optionText}</p>
-            <button onClick={
-                (e) => {
-                    props.handleDeleteOption(props.optionText)
-                }
-            }>Remove
-            </button>
-        </div>
-    );
-};
-
-
-// AddOption Component
-class AddOption extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleAddOption = this.handleAddOption.bind(this);
-
-        this.state = {
-            error: undefined
-        }
-    }
-
-    handleAddOption(e) {
-        e.preventDefault();
-        const option = e.target.elements['option'].value.trim();
-        const error = this.props.handleAddOption(option);
-
-        this.setState(() => ({error}));
-
-        if(!error) {
-            e.target.elements['option'].value = '';
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                {this.state.error && <p>{this.state.error}</p>}
-
-                <form onSubmit={this.handleAddOption}>
-                    <input type="text" name='option' placeholder="Add an Option Here"/>
-                    <button type="submit" className={'btn btn-sm btn-outline-primary'}>Add Option</button>
-                </form>
-            </div>
-        )
-    }
-}
-
-ReactDOM.render(<IndecisionApp/>, document.getElementById('app'));
