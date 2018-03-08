@@ -15,7 +15,11 @@ module.exports = {
             test:   /\.js$/, // check to see if file ends in .js
             exclude: /node_modules/
         }]
-    }
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'public')
+    },
+    devtool: 'cheap-module-eval-source-map'
 };
 
 // loaders exist per file type
