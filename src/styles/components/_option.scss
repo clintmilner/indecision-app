@@ -1,0 +1,16 @@
+.option {
+  display: flex;
+  justify-content: space-between;
+  padding: $m-size;
+  border-bottom: 1px solid lighten($light-blue, 10%);
+}
+.option__count {
+  font-weight: 500;
+}
+.option__text {
+  color: #fff;
+  font-weight: lighter;
+  word-break: break-all;
+  margin: 0;
+  letter-spacing: 1.5px;
+}

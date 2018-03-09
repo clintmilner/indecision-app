@@ -1,0 +1,20 @@
+.header {
+  background: $off-black;
+  color: #fff;
+  text-shadow: 1px 1px 1px $off-black;
+  margin-bottom: $xl-size;
+  padding: $m-size 0;
+  border-bottom: 1px solid $off-black;
+}
+
+// BEM - Block Element Modifier
+.header__title {
+  font-size: $l-size;
+  margin:0;
+}
+.header__subtitle {
+  font-size: $m-size;
+  color: $off-white;
+  font-weight: 500;
+  margin: 0;
+}
