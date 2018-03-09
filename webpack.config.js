@@ -10,11 +10,21 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
-        rules: [{
-            loader: 'babel-loader',
-            test:   /\.js$/, // check to see if file ends in .js
-            exclude: /node_modules/
-        }]
+        rules: [
+            {
+                loader: 'babel-loader',
+                test:   /\.js$/, // check to see if file ends in .js
+                exclude: /node_modules/
+            },
+            {
+                test: /\.s?css$/, // get all the CSS files
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            }
+        ]
     },
     devServer: {
         contentBase: path.join(__dirname, 'public')
